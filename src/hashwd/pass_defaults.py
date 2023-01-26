@@ -1,4 +1,4 @@
-## Defaults for the respective values in hashwd.py
+# Defaults for the respective values in hashwd.py
 
 # Define constants for the allowed range of values for number of words, numbers, and symbols
 MIN_WORDS = 1
@@ -12,7 +12,7 @@ MAX_SYMBOLS = 10
 SYMBOLS = ["!", "@", "#", "_", "-", "?", "(", ")", "[", "]"]
 
 # Define the dictionary file filepath
-DICTIONARY_FILE = "C:/hashwd/dictionary.txt"
+DICTIONARY_FILE = "C:/hashwd/dictionary.py"
 
 # Define the default number of words, numbers, and symbols when generating a password without arguments or prompts
 WORDS_DEFAULT = 4
