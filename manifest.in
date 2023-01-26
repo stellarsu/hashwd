@@ -1,5 +1,0 @@
-include README.md
-include defaults.py
-include setup.py
-include dictionary.txt
-recursive-include hashwd *
