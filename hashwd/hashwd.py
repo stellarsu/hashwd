@@ -1,4 +1,4 @@
-# Import necessary modules
+# Import modules
 import random
 import pyperclip
 from pyperclip import copy

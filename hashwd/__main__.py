@@ -1,6 +1,7 @@
-# Import necessary modules
+# Import modules
 import argparse
 import pyperclip
+from pyperclip import copy
 import requests
 import re
 import hashwd
