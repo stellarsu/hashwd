@@ -3,10 +3,10 @@ import argparse
 import pyperclip
 import requests
 import re
+import hashwd
 from hashwd import generate_password, clear_clipboard
 import pass_defaults
-from pass_defaults import WORDS_DEFAULT, NUMBERS_DEFAULT, SYMBOLS_DEFAULT, MAX_NUMBERS, MIN_NUMBERS, MAX_SYMBOLS, \
-    DICTIONARY_FILE, MAX_SYMBOLS, MAX_WORDS
+from pass_defaults import WORDS_DEFAULT, NUMBERS_DEFAULT, SYMBOLS_DEFAULT, SYMBOLS, DICTIONARY_FILE
 
 
 def main():
@@ -52,18 +52,18 @@ def main():
         if new_default_words:
             pass_defaults.WORDS_DEFAULT = int(new_default_words)
             # Replace the current value of WORDS_DEFAULT in the string with the new value
-            defaults_contents = re.sub(r"WORDS_DEFAULT = \d+", "WORDS_DEFAULT = {}".format(WORDS_DEFAULT),
+            defaults_contents = re.sub(r"pass_defaults.WORDS_DEFAULT = \d+", "WORDS_DEFAULT = {}".format(WORDS_DEFAULT),
                                        defaults_contents)
         else:
-            new_default_words = WORDS_DEFAULT
+            new_default_words = pass_defaults.WORDS_DEFAULT
 
         print("Enter new default value for number of numbers. The current value is {}:"
-              .format(pass_defaults.NUMBERS_DEFAULT))
+              .format(NUMBERS_DEFAULT))
         new_default_numbers = input()
         if new_default_numbers:
-            NUMBERS_DEFAULT = int(new_default_numbers)
+            pass_defaults.NUMBERS_DEFAULT = int(new_default_numbers)
             # Replace the current value of NUMBERS_DEFAULT in the string with the new value
-            defaults_contents = re.sub(r"NUMBERS_DEFAULT = \d+", "NUMBERS_DEFAULT = {}".format(NUMBERS_DEFAULT),
+            defaults_contents = re.sub(r"pass_defaults.NUMBERS_DEFAULT = \d+", "pass_defaults.NUMBERS_DEFAULT = {}".format(pass_defaults.NUMBERS_DEFAULT),
                                        defaults_contents)
         else:
             new_default_numbers = pass_defaults.NUMBERS_DEFAULT
@@ -72,9 +72,9 @@ def main():
               .format(pass_defaults.SYMBOLS_DEFAULT))
         new_default_symbols = input()
         if new_default_symbols:
-            SYMBOLS_DEFAULT = int(new_default_symbols)
+            pass_defaults.SYMBOLS_DEFAULT = int(new_default_symbols)
             # Replace the current value of SYMBOLS_DEFAULT in the string with the new value
-            defaults_contents = re.sub(r"SYMBOLS_DEFAULT = \d+", "SYMBOLS_DEFAULT = {}".format(SYMBOLS_DEFAULT),
+            defaults_contents = re.sub(r"pass_defaults.SYMBOLS_DEFAULT = \d+", "pass_defaults.SYMBOLS_DEFAULT = {}".format(pass_defaults.SYMBOLS_DEFAULT),
                                        defaults_contents)
         else:
             new_default_symbols = pass_defaults.SYMBOLS_DEFAULT
@@ -84,9 +84,9 @@ def main():
                   .format(pass_defaults.MAX_SYMBOLS))
             new_max_symbols = input()
             if new_max_symbols:
-                MAX_SYMBOLS = int(new_max_symbols)
+                pass_defaults.MAX_SYMBOLS = int(new_max_symbols)
                 # Replace the current value of MAX_SYMBOLS in the string with the new value
-                defaults_contents = re.sub(r"MAX_SYMBOLS = \d+", "MAX_SYMBOLS = {}".format(MAX_SYMBOLS),
+                defaults_contents = re.sub(r"pass_defaults.MAX_SYMBOLS = \d+", "pass_defaults.MAX_SYMBOLS = {}".format(pass_defaults.MAX_SYMBOLS),
                                            defaults_contents)
             else:
                 new_max_symbols = pass_defaults.MAX_SYMBOLS
@@ -94,9 +94,9 @@ def main():
                   .format(pass_defaults.MAX_NUMBERS))
             new_max_numbers = input()
             if new_max_numbers:
-                MAX_NUMBERS = int(new_max_numbers)
+                pass_defaults.MAX_NUMBERS = int(new_max_numbers)
                 # Replace the current value of MAX_NUMBERS in the string with the new value
-                defaults_contents = re.sub(r"MAX_NUMBERS = \d+", "MAX_NUMBERS = {}".format(MAX_NUMBERS),
+                defaults_contents = re.sub(r"pass_defaults.MAX_NUMBERS = \d+", "pass_defaults.MAX_NUMBERS = {}".format(pass_defaults.MAX_NUMBERS),
                                            defaults_contents)
             else:
                 new_max_numbers = pass_defaults.MAX_NUMBERS
@@ -104,30 +104,30 @@ def main():
                   .format(pass_defaults.DICTIONARY_FILE))
             new_dictionary_file = input()
             if new_dictionary_file:
-                DICTIONARY_FILE = new_dictionary_file
+                pass_defaults.DICTIONARY_FILE = new_dictionary_file
                 # Replace the current value of DICTIONARY_FILE in the string with the new value
-                defaults_contents = re.sub(r"DICTIONARY_FILE = '.*?'", "DICTIONARY_FILE = '{}'"
-                                           .format(DICTIONARY_FILE), defaults_contents)
+                defaults_contents = re.sub(r"pass_defaults.DICTIONARY_FILE = '.*?'", "pass_defaults.DICTIONARY_FILE = '{}'"
+                                           .format(pass_defaults.DICTIONARY_FILE), defaults_contents)
         else:
             new_dictionary_file = pass_defaults.DICTIONARY_FILE
 
-        # Write the modified string back to the defaults.py file
+        # Write the modified string back to the pass_defaults.py file
         with open("pass_defaults.py", "w") as file:
             file.write(defaults_contents)
             exit()
 
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
-        clear_clipboard()
+        hashwd.clear_clipboard()
         exit()
     # Set default values for the number of words, numbers, and symbols within main
-    num_words = WORDS_DEFAULT
+    num_words = pass_defaults.WORDS_DEFAULT
     num_numbers = pass_defaults.NUMBERS_DEFAULT
     num_symbols = pass_defaults.SYMBOLS_DEFAULT
 
     # Use custom values instead of the default value if specified
     if args.words:
-        num_words = args.words if args.words else WORDS_DEFAULT
+        num_words = args.words if args.words else pass_defaults.WORDS_DEFAULT
     if args.numbers:
         num_numbers = args.numbers if args.numbers else pass_defaults.NUMBERS_DEFAULT
     if args.symbols:
@@ -138,7 +138,7 @@ def main():
         while True:
             num_words = input("How many words?:")
             if num_words == "":
-                num_words = WORDS_DEFAULT
+                num_words = pass_defaults.WORDS_DEFAULT
                 break
             try:
                 num_words = int(num_words)
@@ -176,10 +176,10 @@ def main():
                 print("Enter a valid number.")
     # Generate a password
     if args.command == "generate":
-        generate_password(pass_defaults.DICTIONARY_FILE, word_quantity=WORDS_DEFAULT,
+        hashwd.generate_password(pass_defaults.DICTIONARY_FILE, word_quantity=pass_defaults.WORDS_DEFAULT,
                           number_quantity=pass_defaults.NUMBERS_DEFAULT, symbol_quantity=pass_defaults.SYMBOLS_DEFAULT)
 
-        password = generate_password(pass_defaults.DICTIONARY_FILE, num_words, num_numbers, num_symbols)
+        password = hashwd.generate_password(pass_defaults.DICTIONARY_FILE, num_words, num_numbers, num_symbols)
 
         if args.copy:
             pyperclip.copy(password)
@@ -194,7 +194,7 @@ def main():
 
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
-        clear_clipboard()
+        hashwd.clear_clipboard()
         exit()
 
 

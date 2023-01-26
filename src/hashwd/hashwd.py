@@ -1,12 +1,14 @@
 # Import necessary modules
 import random
 import pyperclip
+from pyperclip import copy
+import pass_defaults
 from pass_defaults import WORDS_DEFAULT, NUMBERS_DEFAULT, SYMBOLS_DEFAULT, SYMBOLS
 
 
 # Function to generate a random password
-def generate_password(dictionary, word_quantity=WORDS_DEFAULT, number_quantity=NUMBERS_DEFAULT,
-                      symbol_quantity=SYMBOLS_DEFAULT):
+def generate_password(dictionary, word_quantity=pass_defaults.WORDS_DEFAULT, number_quantity=pass_defaults.NUMBERS_DEFAULT,
+                      symbol_quantity=pass_defaults.SYMBOLS_DEFAULT):
     # read the file line by line and generate the password using only the words that are needed
     words = []
     with open(dictionary, "r") as temp_dictionary_file:
