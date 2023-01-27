@@ -17,4 +17,4 @@ DICTIONARY_FILE = "/hashwd/dictionary.py"
 # Define the default number of words, numbers, and symbols when generating a password without arguments or prompts
 WORDS_DEFAULT = 4
 NUMBERS_DEFAULT = 2
-SYMBOLS_DEFAULT = 1
+SYMBOLS_DEFAULT = 2
