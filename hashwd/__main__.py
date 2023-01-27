@@ -3,7 +3,6 @@ import argparse
 import pyperclip
 import re
 import os
-import hashwd
 import parameters
 import generate
 import clear
