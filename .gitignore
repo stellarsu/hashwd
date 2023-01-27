@@ -1,0 +1,2 @@
+# Configure ignored files for the project.
+__pycache__/
