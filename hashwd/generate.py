@@ -1,3 +1,4 @@
+# Description: This module contains the function to generate a random password
 # Import modules and functions
 import random
 import pyperclip
@@ -38,8 +39,3 @@ def generate_password(dictionary, word_quantity=hashwd.pass_defaults.WORDS_DEFAU
                                   else f"{elem} " for elem in password_elements])
 
     return password_generated  # Return the generated password
-
-
-# Create the function to clear the clipboard when the clear command is used
-def clear_clipboard():
-    pyperclip.copy("")
