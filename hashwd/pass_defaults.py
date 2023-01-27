@@ -12,7 +12,7 @@ MAX_SYMBOLS = 10
 SYMBOLS = ["!", "@", "#", "_", "-", "?", "(", ")", "[", "]"]
 
 # Define the dictionary file filepath
-DICTIONARY_FILE = "C:/hashwd/dictionary.py"
+DICTIONARY_FILE = "/hashwd/dictionary.py"
 
 # Define the default number of words, numbers, and symbols when generating a password without arguments or prompts
 WORDS_DEFAULT = 4
