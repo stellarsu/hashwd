@@ -2,13 +2,12 @@
 # Import modules and functions
 import random
 import pyperclip
-import hashwd
-
+import parameters
 
 # Function to generate a random password
-def generate_password(dictionary, word_quantity=hashwd.pass_defaults.WORDS_DEFAULT,
-                      number_quantity=hashwd.pass_defaults.NUMBERS_DEFAULT,
-                      symbol_quantity=hashwd.pass_defaults.SYMBOLS_DEFAULT):
+def generate_password(dictionary, word_quantity=parameters.WORDS_DEFAULT,
+                      number_quantity=parameters.NUMBERS_DEFAULT,
+                      symbol_quantity=parameters.SYMBOLS_DEFAULT):
     # read the file line by line and generate the password using only the words that are needed
     words = []
     with open(dictionary, "r") as temp_dictionary_file:
@@ -28,14 +27,14 @@ def generate_password(dictionary, word_quantity=hashwd.pass_defaults.WORDS_DEFAU
 
     # Randomly place the numbers and symbols at the beginning or end of the password
     if random.random() < 0.5:
-        password_elements.insert(0, "".join(random.sample(hashwd.pass_defaults.SYMBOLS, k=symbol_quantity)))
+        password_elements.insert(0, "".join(random.sample(parameters.SYMBOLS, k=symbol_quantity)))
         password_elements.insert(0, "".join([str(num) for num in random.sample(range(0, 9), k=number_quantity)]))
     else:
-        password_elements.append("".join(random.sample(hashwd.pass_defaults.SYMBOLS, k=symbol_quantity)))
+        password_elements.append("".join(random.sample(parameters.SYMBOLS, k=symbol_quantity)))
         password_elements.append("".join([str(num) for num in random.sample(range(0, 9), k=number_quantity)]))
 
 # Join the elements in the password_elements list into a single string, and numbers/symbols are joined without spaces
-    password_generated = "".join([str(elem) if elem.isnumeric() or elem in hashwd.pass_defaults.SYMBOLS
+    password_generated = "".join([str(elem) if elem.isnumeric() or elem in parameters.SYMBOLS
                                   else f"{elem} " for elem in password_elements])
 
     return password_generated  # Return the generated password
