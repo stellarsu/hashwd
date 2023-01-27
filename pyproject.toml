@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hashwd"
-version = "0.5.0-beta"
+version = "0.5.101"
 description = "Quickly generate a strong, random password using common words"
 license = "GPL-3.0"
 authors = ["Jordan Langland <root@gnom.me>"]
@@ -10,7 +10,7 @@ homepage = "https://pypi.org/project/hashwd"
 
 readme = "README.md"
 
-keywords = ["password", "generator", "xkcd"]
+keywords = ["password", "generator", "xkcd", "offline", "dictionary", "strong password", "random password"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -19,7 +19,7 @@ argparse = "^1.4"
 requests = "^2.24"
 
 [tool.poetry.scripts]
-hashwd = "hashwd.__main__:main"
+hashwd = "hashwd.__main__:set_parameters"
 
 [tool.poetry.dev-dependencies]
 
