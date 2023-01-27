@@ -123,9 +123,9 @@ def set_parameters():
                 defaults_contents = file.write(defaults_contents)
             exit()
 
-    # Clear the clipboard and exit when the clear command is used
-    if args.command == "clear":
-        clear.clear_clipboard()
+        # Clear the clipboard and exit when the clear command is used
+        if args.command == "clear":
+            clear.clear_clipboard()
         exit()
     # Set default values for the number of words, numbers, and symbols
     num_words = parameters.WORDS_DEFAULT
