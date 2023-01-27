@@ -6,12 +6,12 @@ import hashwd
 import os
 
 
-# Define functions to handle the commands
-def main():
+# Define functions to handle the commands and arguments from the command line
+def set_parameters():
     # Use argparse to handle commands and arguments from the command line
     parser = argparse.ArgumentParser(
-        description="Generate a strong, random password using a list of words and optional numbers and symbols.",
-        epilog="")
+        description="\nGenerate a strong, random password using a list of words and optional numbers and symbols.\n\n",
+        epilog="\n")
     sub_parsers = parser.add_subparsers(title="subcommands", dest="command", required=True, help="")
     generate_parser = sub_parsers.add_parser("generate",
                                              help="generate a new password with or without arguments; hashwd generate")
@@ -41,17 +41,17 @@ def main():
     # Get the directory of your script
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Construct the path to the pass_defaults.py file
-    pass_defaults_path = os.path.join(script_dir, "pass_defaults.py")
+    # Construct the path to the parameters.py file
+    parameters_path = os.path.join(script_dir, "parameters.py")
 
     # Modifies the default values used when generating a password with no arguments
     if args.command == "defaults":
-        # Open the pass_defaults.py file and read its contents
-        with open(pass_defaults_path, "r") as file:
+        # Open the parameters.py file and read its contents
+        with open(parameters_path, "r") as file:
             defaults_contents = file.read()
         # If the -a flag is used, update the max values for numbers and symbols, also update the file path of the dictionary file
         print("Enter new default value for number of words. The current value is {}:"
-              .format(hashwd.pass_defaults.WORDS_DEFAULT))
+              .format(hashwd.parameters.WORDS_DEFAULT))
         new_default_words = input()
         if new_default_words:
             WORDS_DEFAULT = int(new_default_words)
@@ -59,10 +59,10 @@ def main():
             defaults_contents = re.sub(r"WORDS_DEFAULT = \d+", "WORDS_DEFAULT = {}".format(WORDS_DEFAULT),
                                        defaults_contents)
         else:
-            new_default_words = hashwd.pass_defaults.WORDS_DEFAULT
+            new_default_words = hashwd.parameters.WORDS_DEFAULT
 
         print("Enter new default value for number of numbers. The current value is {}:"
-              .format(hashwd.pass_defaults.NUMBERS_DEFAULT))
+              .format(hashwd.parameters.NUMBERS_DEFAULT))
         new_default_numbers = input()
         if new_default_numbers:
             NUMBERS_DEFAULT = int(new_default_numbers)
@@ -70,10 +70,10 @@ def main():
             defaults_contents = re.sub(r"NUMBERS_DEFAULT = \d+", "NUMBERS_DEFAULT = {}".format(NUMBERS_DEFAULT),
                                        defaults_contents)
         else:
-            new_default_numbers = hashwd.pass_defaults.NUMBERS_DEFAULT
+            new_default_numbers = hashwd.parameters.NUMBERS_DEFAULT
 
         print("Enter new default value for number of symbols. The current value is {}:"
-              .format(hashwd.pass_defaults.SYMBOLS_DEFAULT))
+              .format(hashwd.parameters.SYMBOLS_DEFAULT))
         new_default_symbols = input()
         if new_default_symbols:
             SYMBOLS_DEFAULT = int(new_default_symbols)
@@ -81,11 +81,11 @@ def main():
             defaults_contents = re.sub(r"SYMBOLS_DEFAULT = \d+", "SYMBOLS_DEFAULT = {}".format(SYMBOLS_DEFAULT),
                                        defaults_contents)
         else:
-            new_default_symbols = hashwd.pass_defaults.SYMBOLS_DEFAULT
+            new_default_symbols = hashwd.parameters.SYMBOLS_DEFAULT
 
         if args.all:
             print("Enter new default value for maximum number of symbols. The current value is {}:"
-                  .format(hashwd.pass_defaults.MAX_SYMBOLS))
+                  .format(hashwd.parameters.MAX_SYMBOLS))
             new_max_symbols = input()
             if new_max_symbols:
                 MAX_SYMBOLS = int(new_max_symbols)
@@ -93,9 +93,9 @@ def main():
                 defaults_contents = re.sub(r"MAX_SYMBOLS = \d+", "MAX_SYMBOLS = {}".format(MAX_SYMBOLS),
                                            defaults_contents)
             else:
-                new_max_symbols = hashwd.pass_defaults.MAX_SYMBOLS
+                new_max_symbols = hashwd.parameters.MAX_SYMBOLS
             print("Enter new default value for maximum number of symbols. The current value is {}:"
-                  .format(hashwd.pass_defaults.MAX_SYMBOLS))
+                  .format(hashwd.parameters.MAX_SYMBOLS))
             new_max_numbers = input()
             if new_max_numbers:
                 MAX_NUMBERS = int(new_max_numbers)
@@ -103,9 +103,9 @@ def main():
                 defaults_contents = re.sub(r"MAX_NUMBERS = \d+", "MAX_NUMBERS = {}".format(MAX_NUMBERS),
                                            defaults_contents)
             else:
-                new_max_numbers = hashwd.pass_defaults.MAX_NUMBERS
+                new_max_numbers = hashwd.parameters.MAX_NUMBERS
             print("Enter new filepath for dictionary file. The current path is {}:"
-                  .format(hashwd.pass_defaults.DICTIONARY_FILE))
+                  .format(hashwd.parameters.DICTIONARY_FILE))
             new_dictionary_file = input()
             if new_dictionary_file:
                 DICTIONARY_FILE = new_dictionary_file
@@ -113,36 +113,36 @@ def main():
                 defaults_contents = re.sub(r"DICTIONARY_FILE = '.*?'", "DICTIONARY_FILE = '{}'"
                                            .format(DICTIONARY_FILE), defaults_contents)
             else:
-                new_dictionary_file = hashwd.pass_defaults.DICTIONARY_FILE
+                new_dictionary_file = hashwd.parameters.DICTIONARY_FILE
 
-            # Write the modified string back to the pass_defaults.py file
-            with open(pass_defaults_path, "w") as file:
+            # Write the modified string back to the parameters.py file
+            with open(parameters_path, "w") as file:
                 defaults_contents = file.write(defaults_contents)
             exit()
 
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
-        hashwd.hashwd.clear_clipboard()
+        hashwd.clear.clear_clipboard()
         exit()
-    # Set default values for the number of words, numbers, and symbols within main
-    num_words = hashwd.pass_defaults.WORDS_DEFAULT
-    num_numbers = hashwd.pass_defaults.NUMBERS_DEFAULT
-    num_symbols = hashwd.pass_defaults.SYMBOLS_DEFAULT
+    # Set default values for the number of words, numbers, and symbols
+    num_words = hashwd.parameters.WORDS_DEFAULT
+    num_numbers = hashwd.parameters.NUMBERS_DEFAULT
+    num_symbols = hashwd.parameters.SYMBOLS_DEFAULT
 
     # Use custom values instead of the default value if specified
     if args.words:  # If the --words argument is used
-        num_words = args.words if args.words else hashwd.pass_defaults.WORDS_DEFAULT
+        num_words = args.words if args.words else hashwd.parameters.WORDS_DEFAULT
     if args.numbers:  # If the --numbers argument is used
-        num_numbers = args.numbers if args.numbers else hashwd.pass_defaults.NUMBERS_DEFAULT
+        num_numbers = args.numbers if args.numbers else hashwd.parameters.NUMBERS_DEFAULT
     if args.symbols:  # If the --symbols argument is used
-        num_symbols = args.symbols if args.symbols else hashwd.pass_defaults.SYMBOLS_DEFAULT
+        num_symbols = args.symbols if args.symbols else hashwd.parameters.SYMBOLS_DEFAULT
 
     # The --prompt argument allows user to specify the values for the number of words, numbers, and symbols
     if args.prompt:
         while True:
             num_words = input("How many words?:")
             if num_words == "":
-                num_words = hashwd.pass_defaults.WORDS_DEFAULT
+                num_words = hashwd.parameters.WORDS_DEFAULT
                 break
             try:
                 num_words = int(num_words)
@@ -155,11 +155,11 @@ def main():
         while True:
             num_numbers = input("How many numbers? 0-9: ")
             if num_numbers == "":
-                num_numbers = hashwd.pass_defaults.NUMBERS_DEFAULT
+                num_numbers = hashwd.parameters.NUMBERS_DEFAULT
                 break
             try:
                 num_numbers = int(num_numbers)
-                if 0 <= num_numbers <= hashwd.pass_defaults.MAX_NUMBERS:
+                if 0 <= num_numbers <= hashwd.parameters.MAX_NUMBERS:
                     break
                 else:
                     print("Enter a number between 0 & 9.")
@@ -168,7 +168,7 @@ def main():
         while True:
             num_symbols = input("How many symbols? 0-10: ")
             if num_symbols == "":
-                num_symbols = hashwd.pass_defaults.SYMBOLS_DEFAULT
+                num_symbols = hashwd.parameters.SYMBOLS_DEFAULT
                 break
             try:
                 num_symbols = int(num_symbols)
@@ -180,12 +180,12 @@ def main():
                 print("Enter a valid number.")
     # Generate a password using the default values if no arguments used
     if args.command == "generate":
-        hashwd.hashwd.generate_password(hashwd.pass_defaults.DICTIONARY_FILE,
-                                        word_quantity=hashwd.pass_defaults.WORDS_DEFAULT,
-                                        number_quantity=hashwd.pass_defaults.NUMBERS_DEFAULT,
-                                        symbol_quantity=hashwd.pass_defaults.SYMBOLS_DEFAULT)
+        hashwd.generate.generate_password(hashwd.parameters.DICTIONARY_FILE,
+                                        word_quantity=hashwd.parameters.WORDS_DEFAULT,
+                                        number_quantity=hashwd.parameters.NUMBERS_DEFAULT,
+                                        symbol_quantity=hashwd.parameters.SYMBOLS_DEFAULT)
 
-        password = hashwd.hashwd.generate_password(hashwd.pass_defaults.DICTIONARY_FILE, num_words, num_numbers,
+        password = hashwd.generate.generate_password(hashwd.parameters.DICTIONARY_FILE, num_words, num_numbers,
                                                    num_symbols)  # Generate a password
 
         # Copy the password to the clipboard if the --copy argument is used
@@ -196,15 +196,15 @@ def main():
 
     # Modify the defaults values for generating a default password
     if args.command == "defaults":
-        # Read the contents of the pass_defaults.py file into a string
-        with open("pass_defaults.py", "r") as file:
+        # Read the contents of the parameters.py file into a string
+        with open("parameters.py", "r") as file:
             defaults_contents = file.read()
 
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
-        hashwd.hashwd.clear_clipboard()
+        hashwd.clear.clear_clipboard()
         exit()
 
-# Run the main function
+# Run the password_parameters function
 if __name__ == "__main__":
-    main()
+    set_parameters()
