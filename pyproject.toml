@@ -1,6 +1,10 @@
 [tool.poetry]
 name = "hashwd"
+<<<<<<< Updated upstream
 version = "0.5.107-beta"
+=======
+version = "0.5.112-beta"
+>>>>>>> Stashed changes
 description = "Quickly generate a strong, random password using common words"
 license = "GPL-3.0"
 authors = ["Jordan Langland <root@gnom.me>"]

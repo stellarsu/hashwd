@@ -1,8 +1,13 @@
 # Description: This module contains the function to generate a random password
 # Import modules and functions
 import random
+<<<<<<< Updated upstream:hashwd/generate.py
 import pyperclip
 import parameters
+=======
+import parameters
+
+>>>>>>> Stashed changes:hashwd/hashwd.py
 
 # Function to generate a random password
 def generate_password(dictionary, word_quantity=parameters.WORDS_DEFAULT,

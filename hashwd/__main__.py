@@ -3,6 +3,7 @@ import argparse
 import pyperclip
 import re
 import os
+<<<<<<< Updated upstream
 import generate
 import clear
 import parameters
@@ -10,6 +11,21 @@ import parameters
 
 # Define functions to handle the commands and arguments from the command line
 def set_parameters():
+=======
+import generate as generate
+import clear as clear
+import parameters as parameters
+
+
+# Define functions to handle the commands
+def set_parameters():
+    # Get the directory of your script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the path to the parameters.py file
+    parameters_path = os.path.join(script_dir, "parameters.py")
+    
+>>>>>>> Stashed changes
     # Use argparse to handle commands and arguments from the command line
     parser = argparse.ArgumentParser(
         description="\nGenerate a strong, random password using a list of words and optional numbers and symbols.\n\n",
@@ -38,6 +54,7 @@ def set_parameters():
                                  help="update the max values for numbers and symbols, "
                                       "also update the file path of the dictionary file; hashwd defaults -a")
 
+<<<<<<< Updated upstream
     args = parser.parse_args()  # Parse the arguments from the command line
     
     # Get the directory of your script
@@ -46,6 +63,11 @@ def set_parameters():
     # Construct the path to the parameters.py file
     parameters_path = os.path.join(script_dir, "parameters.py")
     
+=======
+    # Parse the arguments from the command line
+    args = parser.parse_args()
+
+>>>>>>> Stashed changes
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
         clear.clear_clipboard()
@@ -126,7 +148,15 @@ def set_parameters():
                 defaults_contents = file.write(defaults_contents)
             exit()
 
+<<<<<<< Updated upstream
     # Set default values for the number of words, numbers, and symbols
+=======
+    # Clear the clipboard and exit when the clear command is used
+    if args.command == "clear":
+        clear.clear_clipboard()
+        exit()
+    # Set default values for the number of words, numbers, and symbols within main
+>>>>>>> Stashed changes
     num_words = parameters.WORDS_DEFAULT
     num_numbers = parameters.NUMBERS_DEFAULT
     num_symbols = parameters.SYMBOLS_DEFAULT
@@ -202,10 +232,13 @@ def set_parameters():
         with open("parameters.py", "r") as file:
             defaults_contents = file.read()
 
+<<<<<<< Updated upstream
     # Clear the clipboard and exit when the clear command is used
     if args.command == "clear":
         clear.clear_clipboard()
         exit()
+=======
+>>>>>>> Stashed changes
 
 # Run the password_parameters function
 if __name__ == "__main__":
