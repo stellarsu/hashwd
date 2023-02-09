@@ -19,7 +19,7 @@ argparse = "^1.4"
 requests = "^2.24"
 
 [tool.poetry.scripts]
-hashwd = "hashwd.__main__:set_parameters"
+hashwd = "hashwd.__main__:main"
 
 [tool.poetry.dev-dependencies]
 
